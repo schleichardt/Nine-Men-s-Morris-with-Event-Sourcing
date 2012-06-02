@@ -1,0 +1,16 @@
+.*
+!.gitignore
+
+logs
+project/project
+project/target
+target
+tmp
+dist
+test-result
+build
+*.iml
+*.ipr
+*.iws
+*~
+*.lock
