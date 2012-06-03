@@ -1,0 +1,1 @@
+coffee --bare -o build/ -cw coffee/
