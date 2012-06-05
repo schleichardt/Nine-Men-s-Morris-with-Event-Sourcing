@@ -1,0 +1,1 @@
+coffee --bare -o build/ -w --join test.js -c coffee/test

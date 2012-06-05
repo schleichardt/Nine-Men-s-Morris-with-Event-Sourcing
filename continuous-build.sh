@@ -1,1 +1,1 @@
-coffee --bare -o build/ -cw coffee/
+coffee --bare -o build/ -w --join main.js -c coffee/main
