@@ -1,10 +1,3 @@
-contains = (haystack, needle) -> haystack.indexOf(needle) != -1
-
-test 'bla',->
-  expect(1);
-  equal(true, true, "passing test with coffee")
-
-
 test 'ApplicationWithEventSourcingConstruction', ->
   expect 1
   equal new ApplicationWithEventSourcing().eventLog.length, 0, "empty log expected"
@@ -30,6 +23,18 @@ test 'event serialization', ->
   restoredApp = new ApplicationWithEventSourcing(exportedEvents)
   ok contains(JSON.stringify(restoredApp.exportEvents()), "foo2"), "export again works"
 
-test 'mills field', ->
-  field = new MillsBoard()
-  equal field.toDebugString(), 2
+test 'json with default values', ->
+  expect 3
+  json1 =
+    one: "value one"
+    two: "value two"
+
+  json2 =
+    two: "2"
+    three: "3"
+
+  merged = mergeJson(json1, json2)
+  equal merged.one, "value one"
+  equal merged.two, "2", "value merged"
+  equal merged.three, "3"
+

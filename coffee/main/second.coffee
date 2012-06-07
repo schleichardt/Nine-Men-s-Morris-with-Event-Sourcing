@@ -58,3 +58,11 @@ class MillsBoard
 
   toDebugString: ->
     JSON.stringify(this)
+
+# todo: in other file
+mergeJson = (defaultValues, newJson) ->
+  result = {}
+  $.extend result, defaultValues, newJson
+  result
+
+contains = (haystack, needle) -> haystack.indexOf(needle) != -1
