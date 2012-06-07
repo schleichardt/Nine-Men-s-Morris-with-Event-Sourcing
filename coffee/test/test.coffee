@@ -29,3 +29,7 @@ test 'event serialization', ->
   app = undefined
   restoredApp = new ApplicationWithEventSourcing(exportedEvents)
   ok contains(JSON.stringify(restoredApp.exportEvents()), "foo2"), "export again works"
+
+test 'mills field', ->
+  field = new MillsBoard()
+  equal field.toDebugString(), 2
