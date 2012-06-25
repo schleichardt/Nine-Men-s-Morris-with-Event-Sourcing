@@ -9,12 +9,7 @@ initMillsGui = (millsGame) ->
       $("#debug").html(x + " " + y)
   )
 
-
-
-
   offsets=[0, 95, 185, 280, 370, 460, 550]
-
-
 
   points = millsGame.board.points()
   i=0
@@ -30,5 +25,3 @@ initMillsGui = (millsGame) ->
     #hover class: would be dropped here
     activeClass: "filled"
     hoverClass: "drophover"
-
-  alert("gui init")

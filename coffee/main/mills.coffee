@@ -54,3 +54,5 @@ class MillsGame extends ApplicationWithEventSourcing
   constructor: ->
     super()
     @board = new MillsBoard
+
+  @stonesAtStart = -> 9
