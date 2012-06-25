@@ -2,6 +2,11 @@
     border: 1px black dotted;
     width: 600px;
     height: 600px;
+    float: left;
+}
+
+#stoneSource {
+    margin-left: 610px;
 }
 
 #muehle-bild {
@@ -11,11 +16,18 @@
     height: 600px;
 }
 
-
 .morris-stone {
     position: absolute;
     z-index: 10;
     outline: 1px solid #000000;
+}
+
+.morris-stone.player1 {
+    background: black;
+}
+
+.morris-stone.player2 {
+    background: red;
 }
 
 .landing-point {
@@ -26,11 +38,11 @@
 
 
 .landing-point.filled {
-    background: red;
+    background: yellow;
 }
 
 .landing-point.drophover {
-    background: yellow;
+    background: blue;
 }
 
 .morris-stone, .landing-point {
@@ -38,26 +50,10 @@
     height: 50px;
 }
 
-#draggable {
-    position: absolute;
-
-    color: red;
-
-
-    margin-left: 0px;
-    margin-top: 0px;
-
-}
-
-#draggable2 {
-    position: absolute;
-
-    color: green;
-
-
-    margin-left: 70px;
-}
-
 .field {
     position: absolute;
+}
+
+.depot {
+    min-height: 100px;
 }
