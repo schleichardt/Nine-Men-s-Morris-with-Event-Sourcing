@@ -20,8 +20,17 @@
 
 .landing-point {
     position: absolute;
-    background: red;
     z-index: 5;
+}
+
+
+
+.landing-point.filled {
+    background: red;
+}
+
+.landing-point.drophover {
+    background: yellow;
 }
 
 .morris-stone, .landing-point {

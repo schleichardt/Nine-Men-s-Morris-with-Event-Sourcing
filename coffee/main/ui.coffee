@@ -8,8 +8,14 @@ points=[[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0],[1,1],[1,3],[1,5],[3,5],
 
 i=0
 for p in points
-  $("#mainCanvas").append("<div class='landing-point' id='landing-point-#{i}'>lp</div>")
-  $("#landing-point-#{i}").css("margin-left", offsets[p[0]])
-  $("#landing-point-#{i}").css("margin-top", offsets[p[1]])
-  $("#landing-point-#{i}").css("background", "green")
+  $("#mainCanvas").append("<div class='landing-point' id='landing-point-#{i}'></div>")
+  landingPointSelector = $("#landing-point-#{i}")
+  landingPointSelector.css("margin-left", offsets[p[0]])
+  landingPointSelector.css("margin-top", offsets[p[1]])
   i++
+
+$(".landing-point").droppable
+  #active class: draggable is moving and could be dropped here
+  #hover class: would be dropped here
+  activeClass: "filled"
+  hoverClass: "drophover"
