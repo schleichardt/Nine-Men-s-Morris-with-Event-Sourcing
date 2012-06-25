@@ -1,3 +1,13 @@
+$(".morris-stone").draggable(
+  revert: "invalid"
+  snap: ".landing-point"
+  drag: (event, ui) ->
+    x = event.pageX - $("#mainCanvas").offset().left;
+    y = event.pageY - $("#mainCanvas").offset().top;
+    $("#debug").html(x + " " + y)
+)
+
+
 stoneWidth=50
 
 offsets=[0, 95, 185, 280, 370, 460, 550]
