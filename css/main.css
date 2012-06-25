@@ -3,3 +3,43 @@
     width: 600px;
     height: 600px;
 }
+
+#muehle-bild {
+    position: absolute;
+    z-index: 2;
+    width: 600px;
+    height: 600px;
+}
+
+
+.morris-stone {
+    position: absolute;
+    z-index: 10;
+    border: 1px solid #000000;
+    width: 50px;
+    height: 50px;
+}
+
+
+.landing-point {
+
+}
+
+#draggable {
+    position: absolute;
+
+    color: red;
+
+
+    margin-left: 15px;
+
+}
+
+#draggable2 {
+    position: absolute;
+
+    color: green;
+
+
+    margin-left: 70px;
+}
