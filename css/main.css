@@ -1,3 +1,5 @@
 #mainCanvas {
-    border: 1px blue dotted;
+    border: 1px black dotted;
+    width: 600px;
+    height: 600px;
 }
