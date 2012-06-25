@@ -44,3 +44,13 @@ class MillsBoard
 
   toDebugString: ->
     JSON.stringify(this)
+
+  ### which points of the raster can contain a stone ###
+  points: -> [[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0],[1,1],[1,3],[1,5],[3,5],[5,5],[5,3],[5,1],[3,1],[2,2],[2,3],[2,4],[3,4],[4,4],[4,3],[4,2],[3,2]]
+
+
+
+class MillsGame extends ApplicationWithEventSourcing
+  constructor: ->
+    super()
+    @board = new MillsBoard

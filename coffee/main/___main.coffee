@@ -1,5 +1,6 @@
 $(document).ready ->
-  millsGame = new ApplicationWithEventSourcing()
+  millsGame = new MillsGame()
 
   millsGame.logger (eventArray) -> $("#logger").html(eventArray.join("<br>"))
 
+  initMillsGui(millsGame)
