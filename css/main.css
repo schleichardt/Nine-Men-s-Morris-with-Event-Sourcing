@@ -15,14 +15,18 @@
 .morris-stone {
     position: absolute;
     z-index: 10;
-    border: 1px solid #000000;
-    width: 50px;
-    height: 50px;
+    outline: 1px solid #000000;
 }
 
-
 .landing-point {
+    position: absolute;
+    background: red;
+    z-index: 5;
+}
 
+.morris-stone, .landing-point {
+    width: 50px;
+    height: 50px;
 }
 
 #draggable {
@@ -31,7 +35,8 @@
     color: red;
 
 
-    margin-left: 15px;
+    margin-left: 0px;
+    margin-top: 0px;
 
 }
 
@@ -42,4 +47,8 @@
 
 
     margin-left: 70px;
+}
+
+.field {
+    position: absolute;
 }
