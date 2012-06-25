@@ -1,12 +1,16 @@
 #mainCanvas {
-    border: 1px black dotted;
-    width: 600px;
+    width: 620px;
     height: 600px;
     float: left;
 }
 
 #stoneSource {
-    margin-left: 610px;
+    width: 100px;
+    float: left;
+}
+
+#log {
+
 }
 
 #muehle-bild {

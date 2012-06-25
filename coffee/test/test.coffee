@@ -38,3 +38,11 @@ test 'json with default values', ->
   equal merged.two, "2", "value merged"
   equal merged.three, "3"
 
+test 'logger', ->
+  expect 1
+  app = new ApplicationWithEventSourcing()
+  clojureCounter = 0
+  app.logger (eventArray) -> clojureCounter++
+  $("body").trigger {type:"app", "payload": "foo1"}
+  $("body").trigger {type:"app", "payload": "foo3"}
+  equal clojureCounter, 2
