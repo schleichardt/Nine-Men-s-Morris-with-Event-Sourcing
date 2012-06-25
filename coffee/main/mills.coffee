@@ -1,6 +1,6 @@
 millsPlayer =
-  black: 1
-  white: 2
+  player1: 1
+  player2: 2
   none: 3
 
 class MillsBoardSpot
@@ -54,5 +54,34 @@ class MillsGame extends ApplicationWithEventSourcing
   constructor: ->
     super()
     @board = new MillsBoard
+    @turn = millsPlayer.player1
+
+  availableFor: (player) ->
+    if @turn == player
+      @freeFields()
+    else
+      []
+
+  freeFields: ->
+    arrayWithBooleanIsFree = $.map @board.spots, (spot, i) -> spot.isFree()
+    free = []
+    for i in [0..arrayWithBooleanIsFree.length - 1]
+      free.push(i) if arrayWithBooleanIsFree[i]
+    free
+
+  set: (player, fieldNumber) ->
+    field = @board.spots[fieldNumber]
+    if(field.isFree())
+      field.occupiedWith = player
+      @changePlayer()
+    else
+      errorMessage("field occupied")
+
+
+  errorMessage: (error) -> console.log(error)
+
+  changePlayer: ->
+    @turn = if millsPlayer.player1 == @turn then millsPlayer.player2 else millsPlayer.player1
 
   @stonesAtStart = -> 9
+  @fieldsNumber = -> 24

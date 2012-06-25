@@ -46,3 +46,14 @@ test 'logger', ->
   $("body").trigger {type:"app", "payload": "foo1"}
   $("body").trigger {type:"app", "payload": "foo3"}
   equal clojureCounter, 2
+
+test 'turns at start', ->
+  expect 4
+  app = new MillsGame()
+
+  equal app.availableFor(millsPlayer.player1).length, MillsGame.fieldsNumber(), "player 1 can start where he likes"
+  equal app.availableFor(millsPlayer.player2).length, 0, "player 2 is not allowed to start"
+  fieldForPlayer1 = 2 #random value
+  app.set(millsPlayer.player1, fieldForPlayer1)
+  equal app.availableFor(millsPlayer.player1).length, 0, "it's not player 1 turn"
+  equal app.availableFor(millsPlayer.player2).length, MillsGame.fieldsNumber() - 1, "it's player 2's turn and he has only 23 possibilities"
