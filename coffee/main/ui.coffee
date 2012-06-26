@@ -21,6 +21,8 @@ class MillsUi
       hoverClass: "drophover"
       drop: (event, ui) ->
         $(".morris-stone").draggable("option", "disabled", true)
+        selectorDraggable = "#" + ui.draggable[0].id
+        $(selectorDraggable).removeClass("never-moved")
         id = $(this).attr('id').replace("landing-point-", "")
         thisAlias.getGame().trigger {moveTo: id, type: "set"}
 
@@ -33,10 +35,9 @@ class MillsUi
 
   getGame: -> @game
 
-  #todo nach dem setzen wieder deaktivieren
   enableStartMoves: (player, fields) =>
     allowedLandingPoints = $.map(fields, (elementOfArray, indexInArray) -> "#landing-point-#{elementOfArray}")
-    $(".morris-stone.player#{player}").draggable
+    $(".morris-stone.player#{player}.never-moved").draggable
       revert: "invalid"
       snap: allowedLandingPoints.join(",")
       #scope: allowedLandingPoints.join(",")
