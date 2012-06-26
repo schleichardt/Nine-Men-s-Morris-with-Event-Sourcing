@@ -1,11 +1,9 @@
 
 class ApplicationWithEventSourcing
-  constructor: (eventsSuggested = []) ->
+  constructor: (@eventsSuggested = []) ->
     @eventLog = new Array()
     #handle problem this is dynamically scoped with => instead of ->
     $('body').bind 'app', (event) => @eventLog.push(event)
-    for eventEntry in eventsSuggested
-      $("body").trigger eventEntry;
 
   exportEvents: ->
     result = []
@@ -23,3 +21,7 @@ class ApplicationWithEventSourcing
       logOutput = $.map(@exportEvents(), (elementOfArray, indexInArray) -> JSON.stringify(elementOfArray))
       handler(logOutput)
     )
+
+  replay: ->
+    for eventEntry in @eventsSuggested
+      $("body").trigger eventEntry;

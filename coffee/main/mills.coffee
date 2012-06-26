@@ -54,5 +54,34 @@ class MillsGame extends ApplicationWithEventSourcing
   constructor: (eventsSuggested = []) ->
     super(eventsSuggested)
     @board = new MillsBoard
-    #todo events nicht automatisch ablaufen lassen?
-    @turn = millsPlayer.player1 #todo methode und rückwärts aus historie holen
+
+  start: ->
+    if @eventLog.length == 0
+      @trigger {turn: millsPlayer.player1, phase: "start", fields: @freeFields()}
+    else
+      @replay()
+
+  turn: ->
+    if @eventLog.length == 0
+      millsPlayer.player1
+    else
+      @lastEntry().payload.turn
+
+  # returns the last entry of the log
+  lastEntry: ->
+    @eventLog[@eventLog.length - 1]
+
+  trigger: (jsonDataEvent) ->
+    realData = new Object()
+    realData.type = "app"
+    realData.payload = jsonDataEvent
+    $("body").trigger realData
+
+  @fieldsNumber = -> 24
+
+  freeFields: ->
+    arrayWithBooleanIsFree = $.map @board.spots, (spot, i) -> spot.isFree()
+    free = []
+    for i in [0..arrayWithBooleanIsFree.length - 1]
+      free.push(i) if arrayWithBooleanIsFree[i]
+    free

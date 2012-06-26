@@ -21,6 +21,7 @@ test 'event serialization', ->
 
   app = undefined
   restoredApp = new ApplicationWithEventSourcing(exportedEvents)
+  restoredApp.replay()
   ok contains(JSON.stringify(restoredApp.exportEvents()), "foo2"), "export again works"
 
 test 'json with default values', ->
@@ -48,6 +49,10 @@ test 'logger', ->
   equal clojureCounter, 2
 
 test 'turns at start', ->
-  expect 0
+  expect 2
   app = new MillsGame()
-
+  logger = []
+  app.logger (eventArray) -> logger = eventArray
+  app.start()
+  ok logger.length >= 1, "after start at least one event should have occured"
+  equal JSON.parse(logger[0]).payload.phase, "start"
