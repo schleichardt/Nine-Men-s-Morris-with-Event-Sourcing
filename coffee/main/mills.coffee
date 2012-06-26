@@ -58,7 +58,7 @@ class MillsGame extends ApplicationWithEventSourcing
 
   start: ->
     $('body').bind 'app', (event) => @eventOccured(event)
-    if @eventLog.length == 0
+    if @eventsSuggested.length == 0
       @triggerUi {"turn": millsPlayer.player1, "phase": "start", "fields": @freeFields()}
     else
       @replay()
@@ -90,10 +90,15 @@ class MillsGame extends ApplicationWithEventSourcing
     realData = new Object()
     realData.type = "ui"
     realData.payload = jsonDataEvent
+    console.log("triggerUi called")
+    @lastUiTriggerData = realData
     $("body").trigger realData
     #alert("ui triggered " + jsonDataEvent)
 
-
+  repeatLastUiTrigger: ->
+    console.log("last triggerdata")
+    console.log( @lastUiTriggerData)
+    $("body").trigger @lastUiTriggerData
 
   @fieldsNumber: -> 24
   @stonesAtStart: -> 9

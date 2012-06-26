@@ -2,6 +2,12 @@ class MillsUi
   constructor: (@game, rebuild = false) ->
     @initStones()
     @game.uiEventHandler @handleEvent
+    @__addLandingPoints()
+
+
+    @replay() if rebuild
+
+  __addLandingPoints: ->
     offsets=[0, 95, 185, 280, 370, 460, 550]
     i=0
     #todo: ggf. wird brett immer falsch herum gezeichnet
@@ -11,25 +17,24 @@ class MillsUi
       landingPointSelector.css("margin-left", offsets[p[0]])
       landingPointSelector.css("margin-top", offsets[p[1]])
       i++
+
     #todo bug, Steine können übereinander liegen
     thisAlias = this
     $(".landing-point").droppable
-      #active class: draggable is moving and could be dropped here
-      #hover class: would be dropped here
-      activeClass: "filled"
-      hoverClass: "drophover"
+      activeClass: "filled"#active class: draggable is moving and could be dropped here
+      hoverClass: "drophover"#hover class: would be dropped here
       drop: (event, ui) ->
         $(".morris-stone").draggable("option", "disabled", true)
         selectorDraggable = "#" + ui.draggable[0].id
         $(selectorDraggable).removeClass("never-moved")
         id = $(this).attr('id').replace("landing-point-", "")
         thisAlias.getGame().trigger {moveTo: id, type: "set"}
-    @replay() if rebuild
 
 
   replay: ->
-    @getGame().replay()
+    @getGame().start()
     log = @getGame().eventLog
+    console.log("log size = #{log.length}")
     player = 1
     stone = 1
     for move in log
@@ -38,6 +43,7 @@ class MillsUi
         $("#stone-#{stone}-player#{player}").prependTo("#landing-point-#{data.moveTo}");
         stone++ if player == 2
         player = if player == 1 then 2 else 1
+    @getGame().repeatLastUiTrigger()
 
 
 
@@ -47,6 +53,7 @@ class MillsUi
 
   handleEvent: (event) =>
     data = event.payload
+    console.log("ui:handleEvent: " + JSON.stringify(data))
     if data.phase == "start"
       @enableStartMoves(data.turn, data.fields)
 
