@@ -51,37 +51,8 @@ class MillsBoard
 
 
 class MillsGame extends ApplicationWithEventSourcing
-  constructor: ->
-    super()
+  constructor: (eventsSuggested = []) ->
+    super(eventsSuggested)
     @board = new MillsBoard
-    @turn = millsPlayer.player1
-
-  availableFor: (player) ->
-    if @turn == player
-      @freeFields()
-    else
-      []
-
-  freeFields: ->
-    arrayWithBooleanIsFree = $.map @board.spots, (spot, i) -> spot.isFree()
-    free = []
-    for i in [0..arrayWithBooleanIsFree.length - 1]
-      free.push(i) if arrayWithBooleanIsFree[i]
-    free
-
-  set: (player, fieldNumber) ->
-    field = @board.spots[fieldNumber]
-    if(field.isFree())
-      field.occupiedWith = player
-      @changePlayer()
-    else
-      errorMessage("field occupied")
-
-
-  errorMessage: (error) -> console.log(error)
-
-  changePlayer: ->
-    @turn = if millsPlayer.player1 == @turn then millsPlayer.player2 else millsPlayer.player1
-
-  @stonesAtStart = -> 9
-  @fieldsNumber = -> 24
+    #todo events nicht automatisch ablaufen lassen?
+    @turn = millsPlayer.player1 #todo methode und rückwärts aus historie holen
