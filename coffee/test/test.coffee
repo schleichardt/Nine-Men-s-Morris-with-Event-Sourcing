@@ -76,7 +76,6 @@ test 'turns at start', ->
   equal commandLogger.length, 1, "1 stone set, 1 command"
   equal lastUiLog().phase, "start", "should contain startphase message"
   equal lastUiLog().turn, 2, "player 2's turn"
-  console.log("before second move " + app.turn())
 
   app.trigger {moveTo: 3, type: "set"}
 

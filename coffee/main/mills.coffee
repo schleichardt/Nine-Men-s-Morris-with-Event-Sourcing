@@ -116,7 +116,6 @@ class MillsGame extends ApplicationWithEventSourcing
       if(field.isFree())
         field.occupiedWith = @turn()
         if @moveNumber < MillsGame.stonesAtStart() * 2
-          console.log("logLength=" + @eventLog.length + " turn="+@turn() + " moveTo=" + data.moveTo)
           @triggerUi {"turn": @turn(), "phase": "start", "fields": @freeFields()}
         else
            alert("not anymore at start phase, not implemented")
