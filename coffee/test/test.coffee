@@ -5,6 +5,7 @@ test 'ApplicationWithEventSourcingConstruction', ->
 
 test 'ApplicationWithEventSourcing', ->
   expect 3
+  $('body').unbind();
   app = new ApplicationWithEventSourcing()
   equal app.eventLog.length, 0, "empty log expected"
   $("body").trigger {"type":"app", "xyz": "foo"}
@@ -53,33 +54,41 @@ test 'logger', ->
   $('body').unbind();
 
 test 'turns at start', ->
-  expect 12
+  $('body').unbind();
+  expect 14
   app = new MillsGame()
-  logger = []
-  app.logger (eventArray) -> logger = eventArray
+  commandLogger = []
+  uiLogger = []
+  app.logger (eventArray) -> commandLogger = eventArray
+  app.uiEventHandler (event) -> uiLogger.push(event)
 
   app.start()
-  ok logger.length >= 1, "after start at least one event should have occured"
-  getLast = () -> JSON.parse(logger[logger.length - 1]).payload
-  equal getLast().phase, "start", "should show is start phase"
-  equal getLast().turn, 1, "player 1 starts"
+
+  equal commandLogger.length, 0, "no commands sent"
+  equal uiLogger.length, 1, "start signal should have sent"
+
+  lastUiLog = () -> uiLogger[uiLogger.length - 1].payload
+  equal lastUiLog().phase, "start", "should show is start phase"
+  equal lastUiLog().turn, 1, "player 1 starts"
 
   app.trigger {moveTo: 2, type: "set"}
 
-  ok logger.length >= 3, "should have informed gui"
-  equal getLast().phase, "start", "should contain startphase message"
-  equal getLast().turn, 2, "player 2's turn"
+  equal commandLogger.length, 1, "1 stone set, 1 command"
+  equal lastUiLog().phase, "start", "should contain startphase message"
+  equal lastUiLog().turn, 2, "player 2's turn"
+  console.log("before second move " + app.turn())
 
   app.trigger {moveTo: 3, type: "set"}
 
-  ok logger.length >= 4, "should have informed gui"
-  equal getLast().phase, "start", "should contain startphase message"
-  equal getLast().turn, 1, "player 1's turn after second move"
+  equal commandLogger.length, 2, "2 stones set => 2 commands"
+  equal lastUiLog().phase, "start", "should contain startphase message"
+  equal lastUiLog().turn, 1, "player 1's turn after second move"
 
   app.trigger {moveTo: 4, type: "set"}
 
-  ok logger.length >= 6, "should have informed gui"
-  equal getLast().phase, "start", "should contain startphase message"
-  equal getLast().turn, 2, "player 2's turn after third move"
+  equal uiLogger.length, 4, "should have informed gui"
+  equal commandLogger.length, 3, "3 stones - 3 commands"
+  equal lastUiLog().phase, "start", "should contain startphase message"
+  equal lastUiLog().turn, 2, "player 2's turn after third move"
 
   $('body').unbind();

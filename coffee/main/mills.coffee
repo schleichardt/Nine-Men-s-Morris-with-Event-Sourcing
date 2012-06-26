@@ -59,7 +59,7 @@ class MillsGame extends ApplicationWithEventSourcing
   start: ->
     $('body').bind 'app', (event) => @eventOccured(event)
     if @eventLog.length == 0
-      @trigger {"turn": millsPlayer.player1, "phase": "start", "fields": @freeFields()}
+      @triggerUi {"turn": millsPlayer.player1, "phase": "start", "fields": @freeFields()}
     else
       @replay()
 
@@ -67,10 +67,14 @@ class MillsGame extends ApplicationWithEventSourcing
     if @eventLog.length == 0
       millsPlayer.player1
     else
-      turn = @lastEntry().turn
-      if !turn
-        turn = @payloadForLogElement(@eventLog.length - 2).turn
+      result = @eventLog.filter (event) -> event.payload.type == "set"
+      turn = result.length % 2 + 1
+      #console.log("movenumber" + @moveId())
       turn
+
+  moveId: ->
+    result = @eventLog.filter (event) -> event.payload.type == "set"
+    result.length
 
   # returns the last entry of the log
   lastEntry: ->
@@ -81,6 +85,15 @@ class MillsGame extends ApplicationWithEventSourcing
     realData.type = "app"
     realData.payload = jsonDataEvent
     $("body").trigger realData
+
+  triggerUi: (jsonDataEvent) ->
+    realData = new Object()
+    realData.type = "ui"
+    realData.payload = jsonDataEvent
+    $("body").trigger realData
+    #alert("ui triggered " + jsonDataEvent)
+
+
 
   @fieldsNumber: -> 24
   @stonesAtStart: -> 9
@@ -103,10 +116,12 @@ class MillsGame extends ApplicationWithEventSourcing
       if(field.isFree())
         field.occupiedWith = @turn()
         if @moveNumber < MillsGame.stonesAtStart() * 2
-          @trigger {"turn": @otherPlayer(@turn()), "phase": "start", "fields": @freeFields()}
+          console.log("logLength=" + @eventLog.length + " turn="+@turn() + " moveTo=" + data.moveTo)
+          @triggerUi {"turn": @turn(), "phase": "start", "fields": @freeFields()}
         else
-          alert("not anymore at start phase, not implemented")
-
+           alert("not anymore at start phase, not implemented")
+    else
+      console.log(@toJson(event))
 
   payloadForLogElement: (index) ->
     @toJson(@eventLog[index]).payload
@@ -114,3 +129,6 @@ class MillsGame extends ApplicationWithEventSourcing
   errorMessage: (error) -> console.log(error)
 
   otherPlayer: (player) -> if player == millsPlayer.player1 then millsPlayer.player2 else millsPlayer.player1
+
+  uiEventHandler: (handler) ->
+    $('body').bind 'ui', (event) -> handler(event)

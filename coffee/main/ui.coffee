@@ -1,5 +1,16 @@
-initMillsGui = (millsGame) ->
+class MillsUi
+  constructor: (@game) ->
+    @game.uiEventHandler @handleEvent
 
+  handleEvent: (event) ->
+    console.log("MillsUi.handleEvent")
+
+
+
+initMillsGui = (millsGame) ->
+  new MillsUi(millsGame)
+
+nevercalled = ->
   $(".morris-stone").draggable(
     revert: "invalid"
     snap: ".landing-point"
