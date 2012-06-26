@@ -11,6 +11,8 @@ class MillsUi
       landingPointSelector.css("margin-top", offsets[p[1]])
       i++
 
+
+    #todo bug, Steine können übereinander liegen
     thisAlias = this
     $(".landing-point").droppable
       #active class: draggable is moving and could be dropped here
@@ -18,7 +20,7 @@ class MillsUi
       activeClass: "filled"
       hoverClass: "drophover"
       drop: (event, ui) ->
-        $(".morris-stone").draggable( "option", "disabled", true )
+        $(".morris-stone").draggable("option", "disabled", true)
         id = $(this).attr('id').replace("landing-point-", "")
         thisAlias.getGame().trigger {moveTo: id, type: "set"}
 
@@ -37,6 +39,9 @@ class MillsUi
     $(".morris-stone.player#{player}").draggable
       revert: "invalid"
       snap: allowedLandingPoints.join(",")
+      #scope: allowedLandingPoints.join(",")
+
+    $(".morris-stone.player#{player}").draggable( "option", "disabled", false )#must be called explicit after
 
 
 initMillsGui = (millsGame) ->
