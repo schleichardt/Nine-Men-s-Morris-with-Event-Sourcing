@@ -1,5 +1,5 @@
 class MillsUi
-  constructor: (@game) ->
+  constructor: (@game, rebuild = false) ->
     @initStones()
     @game.uiEventHandler @handleEvent
     offsets=[0, 95, 185, 280, 370, 460, 550]
@@ -11,8 +11,6 @@ class MillsUi
       landingPointSelector.css("margin-left", offsets[p[0]])
       landingPointSelector.css("margin-top", offsets[p[1]])
       i++
-
-
     #todo bug, Steine können übereinander liegen
     thisAlias = this
     $(".landing-point").droppable
@@ -26,10 +24,28 @@ class MillsUi
         $(selectorDraggable).removeClass("never-moved")
         id = $(this).attr('id').replace("landing-point-", "")
         thisAlias.getGame().trigger {moveTo: id, type: "set"}
+    @replay() if rebuild
+
+
+  replay: ->
+    @getGame().replay()
+    log = @getGame().eventLog
+    player = 1
+    stone = 1
+    for move in log
+      data = move.payload
+      if data.type == "set"
+        $("#stone-#{stone}-player#{player}").prependTo("#landing-point-#{data.moveTo}");
+        stone++ if player == 2
+        player = if player == 1 then 2 else 1
+
+
+
+
+
+
 
   handleEvent: (event) =>
-    console.log("MillsUi.handleEvent")
-    console.log(event)
     data = event.payload
     if data.phase == "start"
       @enableStartMoves(data.turn, data.fields)
@@ -46,6 +62,7 @@ class MillsUi
     $(".morris-stone.player#{player}").draggable( "option", "disabled", false )#must be called explicit after
 
   initStones: ->
+    $(".morris-stone").remove()
     html = '''<div id="depotPlayer1" class="depot">
                     <h3>Player 1</h3>
                     <div id="stone-1-player1"  class="ui-widget-content morris-stone player1 never-moved"></div>
@@ -73,8 +90,8 @@ class MillsUi
     $("#stoneSource").html(html)
 
 
-initMillsGui = (millsGame) ->
-  new MillsUi(millsGame)
+initMillsGui = (millsGame, rebuild = false) ->
+  new MillsUi(millsGame, rebuild)
 
 nevercalled = ->
   $(".morris-stone").draggable(
