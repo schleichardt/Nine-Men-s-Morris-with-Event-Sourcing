@@ -3,6 +3,7 @@ class MillsUi
     @game.uiEventHandler @handleEvent
     offsets=[0, 95, 185, 280, 370, 460, 550]
     i=0
+    #todo: ggf. wird brett immer falsch herum gezeichnet
     for p in @game.board.points()
       $("#mainCanvas").append("<div class='landing-point' id='landing-point-#{i}'></div>")
       landingPointSelector = $("#landing-point-#{i}")
@@ -10,11 +11,16 @@ class MillsUi
       landingPointSelector.css("margin-top", offsets[p[1]])
       i++
 
+    thisAlias = this
     $(".landing-point").droppable
       #active class: draggable is moving and could be dropped here
       #hover class: would be dropped here
       activeClass: "filled"
       hoverClass: "drophover"
+      drop: (event, ui) ->
+        $(".morris-stone").draggable( "option", "disabled", true )
+        id = $(this).attr('id').replace("landing-point-", "")
+        thisAlias.getGame().trigger {moveTo: id, type: "set"}
 
   handleEvent: (event) =>
     console.log("MillsUi.handleEvent")
@@ -22,6 +28,8 @@ class MillsUi
     data = event.payload
     if data.phase == "start"
       @enableStartMoves(data.turn, data.fields)
+
+  getGame: -> @game
 
   #todo nach dem setzen wieder deaktivieren
   enableStartMoves: (player, fields) =>
