@@ -91,3 +91,27 @@ test 'turns at start', ->
   equal lastUiLog().turn, 2, "player 2's turn after third move"
 
   $('body').unbind();
+
+test 'full replay mills', ->
+  expect 0
+  initialData = [{"type":"app","timeStamp":1340710665514,"payload":{"moveTo":"7","type":"set"}},
+    {"type":"app","timeStamp":1340710666643,"payload":{"moveTo":"14","type":"set"}},
+    {"type":"app","timeStamp":1340710667761,"payload":{"moveTo":"6","type":"set"}},
+    {"type":"app","timeStamp":1340710669138,"payload":{"moveTo":"13","type":"set"}},
+    {"type":"app","timeStamp":1340710671763,"payload":{"moveTo":"15","type":"set"}},
+    {"type":"app","timeStamp":1340710673986,"payload":{"moveTo":"12","type":"set"}},
+    {"type":"app","timeStamp":1340710675411,"payload":{"moveTo":"22","type":"set"}},
+    {"type":"app","timeStamp":1340710676668,"payload":{"moveTo":"21","type":"set"}},
+    {"type":"app","timeStamp":1340710677971,"payload":{"moveTo":"20","type":"set"}},
+    {"type":"app","timeStamp":1340710679107,"payload":{"moveTo":"23","type":"set"}},
+    {"type":"app","timeStamp":1340710682963,"payload":{"moveTo":"16","type":"set"}},
+    {"type":"app","timeStamp":1340710686792,"payload":{"moveTo":"11","type":"set"}},
+    {"type":"app","timeStamp":1340710688163,"payload":{"moveTo":"19","type":"set"}},
+    {"type":"app","timeStamp":1340710689593,"payload":{"moveTo":"3","type":"set"}},
+    {"type":"app","timeStamp":1340710691568,"payload":{"moveTo":"0","type":"set"}},
+    {"type":"app","timeStamp":1340710694881,"payload":{"moveTo":"5","type":"set"}},
+    {"type":"app","timeStamp":1340710696256,"payload":{"moveTo":"1","type":"set"}},
+    {"type":"app","timeStamp":1340710697689,"payload":{"moveTo":"10","type":"set"}}]
+
+  app = new MillsGame(initialData)
+  app.replay()
