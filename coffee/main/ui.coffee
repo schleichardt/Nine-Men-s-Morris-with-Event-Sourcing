@@ -3,8 +3,6 @@ class MillsUi
     @initStones()
     @game.uiEventHandler @handleEvent
     @__addLandingPoints()
-
-
     @replay() if rebuild
 
   __addLandingPoints: ->
@@ -17,19 +15,20 @@ class MillsUi
       landingPointSelector.css("margin-left", offsets[p[0]])
       landingPointSelector.css("margin-top", offsets[p[1]])
       i++
-
     #todo bug, Steine können übereinander liegen
     thisAlias = this
     $(".landing-point").droppable
       activeClass: "filled"#active class: draggable is moving and could be dropped here
       hoverClass: "drophover"#hover class: would be dropped here
       drop: (event, ui) ->
-        $(".morris-stone").draggable("option", "disabled", true)
+        thisAlias.__lockAllStones()
         selectorDraggable = "#" + ui.draggable[0].id
         $(selectorDraggable).removeClass("never-moved")
         id = $(this).attr('id').replace("landing-point-", "")
         thisAlias.getGame().trigger {moveTo: id, type: "set"}
 
+  __lockAllStones: ->
+    $(".morris-stone").draggable("option", "disabled", true)
 
   replay: ->
     @getGame().start()
@@ -40,16 +39,13 @@ class MillsUi
     for move in log
       data = move.payload
       if data.type == "set"
-        $("#stone-#{stone}-player#{player}").prependTo("#landing-point-#{data.moveTo}");
+        element = $("#stone-#{stone}-player#{player}")
+        element.prependTo("#landing-point-#{data.moveTo}");
+        element.removeClass("never-moved")
+        element.draggable( "option", "disabled", true )
         stone++ if player == 2
         player = if player == 1 then 2 else 1
     @getGame().repeatLastUiTrigger()
-
-
-
-
-
-
 
   handleEvent: (event) =>
     data = event.payload
@@ -60,13 +56,15 @@ class MillsUi
   getGame: -> @game
 
   enableStartMoves: (player, fields) =>
+    @__lockAllStones()
     allowedLandingPoints = $.map(fields, (elementOfArray, indexInArray) -> "#landing-point-#{elementOfArray}")
-    $(".morris-stone.player#{player}.never-moved").draggable
+    element = $(".morris-stone.player#{player}.never-moved")
+    element.draggable
       revert: "invalid"
       snap: allowedLandingPoints.join(",")
       #scope: allowedLandingPoints.join(",")
 
-    $(".morris-stone.player#{player}").draggable( "option", "disabled", false )#must be called explicit after
+    element.draggable( "option", "disabled", false )#must be called explicit after
 
   initStones: ->
     $(".morris-stone").remove()

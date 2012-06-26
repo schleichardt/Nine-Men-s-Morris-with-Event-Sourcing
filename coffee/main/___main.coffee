@@ -14,5 +14,10 @@ $(document).ready ->
     rebuildArray = JSON.parse(inputForRebuildAsJson)
     console.log("#{rebuildArray.length} elements for rebuild")
     millsGame = new MillsGame(rebuildArray)
+
+    $("#logger").unbind()
+#    millsGame.logger (eventArray) -> $("#logger").html("[" + eventArray.join(",\n") + "]")
+    millsGame.logger((eventArray) -> $("#logger").attr("value", "[" + eventArray.join(",\n") + "]"); console.log("loggerCALLLED"))
+
     rebuild = true
     initMillsGui(millsGame, rebuild)

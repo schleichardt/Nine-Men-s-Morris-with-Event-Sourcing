@@ -96,8 +96,7 @@ class MillsGame extends ApplicationWithEventSourcing
     #alert("ui triggered " + jsonDataEvent)
 
   repeatLastUiTrigger: ->
-    console.log("last triggerdata")
-    console.log( @lastUiTriggerData)
+    console.log("last triggerdata="+JSON.stringify(@lastUiTriggerData.payload))
     $("body").trigger @lastUiTriggerData
 
   @fieldsNumber: -> 24
