@@ -113,6 +113,4 @@ class MillsGame extends ApplicationWithEventSourcing
 
   errorMessage: (error) -> console.log(error)
 
-  otherPlayer: (player) ->
-    console.log(player)
-    if player == millsPlayer.player1 then millsPlayer.player2 else millsPlayer.player1
+  otherPlayer: (player) -> if player == millsPlayer.player1 then millsPlayer.player2 else millsPlayer.player1

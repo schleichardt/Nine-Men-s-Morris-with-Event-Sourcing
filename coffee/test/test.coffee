@@ -53,7 +53,7 @@ test 'logger', ->
   $('body').unbind();
 
 test 'turns at start', ->
-  expect 6
+  expect 12
   app = new MillsGame()
   logger = []
   app.logger (eventArray) -> logger = eventArray
@@ -69,5 +69,17 @@ test 'turns at start', ->
   ok logger.length >= 3, "should have informed gui"
   equal getLast().phase, "start", "should contain startphase message"
   equal getLast().turn, 2, "player 2's turn"
+
+  app.trigger {moveTo: 3, type: "set"}
+
+  ok logger.length >= 4, "should have informed gui"
+  equal getLast().phase, "start", "should contain startphase message"
+  equal getLast().turn, 1, "player 1's turn after second move"
+
+  app.trigger {moveTo: 4, type: "set"}
+
+  ok logger.length >= 6, "should have informed gui"
+  equal getLast().phase, "start", "should contain startphase message"
+  equal getLast().turn, 2, "player 2's turn after third move"
 
   $('body').unbind();
