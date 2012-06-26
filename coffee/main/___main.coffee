@@ -6,3 +6,4 @@ $(document).ready ->
   initMillsGui(millsGame)
 
   millsGame.start()
+
