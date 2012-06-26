@@ -3,7 +3,8 @@ class ApplicationWithEventSourcing
   constructor: (@eventsSuggested = []) ->
     @eventLog = new Array()
     #handle problem this is dynamically scoped with => instead of ->
-    $('body').bind 'app', (event) => @eventLog.push(event)
+    $('body').bind 'app', (event) =>
+      @eventLog.push(event)
 
   exportEvents: ->
     result = []

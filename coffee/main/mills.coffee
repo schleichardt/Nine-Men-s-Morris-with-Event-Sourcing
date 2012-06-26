@@ -54,10 +54,12 @@ class MillsGame extends ApplicationWithEventSourcing
   constructor: (eventsSuggested = []) ->
     super(eventsSuggested)
     @board = new MillsBoard
+    @moveNumber = 0
 
   start: ->
+    $('body').bind 'app', (event) => @eventOccured(event)
     if @eventLog.length == 0
-      @trigger {turn: millsPlayer.player1, phase: "start", fields: @freeFields()}
+      @trigger {"turn": millsPlayer.player1, "phase": "start", "fields": @freeFields()}
     else
       @replay()
 
@@ -65,11 +67,11 @@ class MillsGame extends ApplicationWithEventSourcing
     if @eventLog.length == 0
       millsPlayer.player1
     else
-      @lastEntry().payload.turn
+      @lastEntry().turn
 
   # returns the last entry of the log
   lastEntry: ->
-    @eventLog[@eventLog.length - 1]
+    payloadForLogElement(@eventLog.length - 1)
 
   trigger: (jsonDataEvent) ->
     realData = new Object()
@@ -77,7 +79,8 @@ class MillsGame extends ApplicationWithEventSourcing
     realData.payload = jsonDataEvent
     $("body").trigger realData
 
-  @fieldsNumber = -> 24
+  @fieldsNumber: -> 24
+  @stonesAtStart: -> 9
 
   freeFields: ->
     arrayWithBooleanIsFree = $.map @board.spots, (spot, i) -> spot.isFree()
@@ -85,3 +88,31 @@ class MillsGame extends ApplicationWithEventSourcing
     for i in [0..arrayWithBooleanIsFree.length - 1]
       free.push(i) if arrayWithBooleanIsFree[i]
     free
+
+  phase: ->
+    if @moveNumber <= MillsGame.stonesAtStart() * 2 then "start" else "normal"
+
+
+  eventOccured: (event) ->
+    data = event.payload
+    @moveNumber++
+    if @phase() == "start"
+      alert("move to " +  " " + data.moveTo)
+      field = @board.spots[data.moveTo]
+      if(field.isFree())
+        field.occupiedWith = @turn()
+        if @moveNumber < @stonesAtStart * 2
+          @trigger {"turn": otherPlayer(@turn), "phase": "start", "fields": @freeFields()}
+        else
+          alert("not anymore at start phase, not implemented")
+      else
+        errorMessage("field occupied")
+    else
+      alert("not at start phase, not implemented " )
+
+  payloadForLogElement: (index) ->
+    JSON.parse(@eventLog[index]).payload
+
+  errorMessage: (error) -> console.log(error)
+
+  otherPlayer: (player) -> if player == millsPlayer.player1 then millsPlayer.player2 else millsPlayer.player1
