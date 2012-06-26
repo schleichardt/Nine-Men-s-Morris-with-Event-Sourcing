@@ -67,11 +67,14 @@ class MillsGame extends ApplicationWithEventSourcing
     if @eventLog.length == 0
       millsPlayer.player1
     else
-      @lastEntry().turn
+      turn = @lastEntry().turn
+      if !turn
+        turn = @payloadForLogElement(@eventLog.length - 2).turn
+      turn
 
   # returns the last entry of the log
   lastEntry: ->
-    payloadForLogElement(@eventLog.length - 1)
+    @payloadForLogElement(@eventLog.length - 1)
 
   trigger: (jsonDataEvent) ->
     realData = new Object()
@@ -95,24 +98,21 @@ class MillsGame extends ApplicationWithEventSourcing
 
   eventOccured: (event) ->
     data = event.payload
-    @moveNumber++
-    if @phase() == "start"
-      alert("move to " +  " " + data.moveTo)
+    if data.type == "set"
       field = @board.spots[data.moveTo]
       if(field.isFree())
         field.occupiedWith = @turn()
-        if @moveNumber < @stonesAtStart * 2
-          @trigger {"turn": otherPlayer(@turn), "phase": "start", "fields": @freeFields()}
+        if @moveNumber < MillsGame.stonesAtStart() * 2
+          @trigger {"turn": @otherPlayer(@turn()), "phase": "start", "fields": @freeFields()}
         else
           alert("not anymore at start phase, not implemented")
-      else
-        errorMessage("field occupied")
-    else
-      alert("not at start phase, not implemented " )
+
 
   payloadForLogElement: (index) ->
-    JSON.parse(@eventLog[index]).payload
+    @toJson(@eventLog[index]).payload
 
   errorMessage: (error) -> console.log(error)
 
-  otherPlayer: (player) -> if player == millsPlayer.player1 then millsPlayer.player2 else millsPlayer.player1
+  otherPlayer: (player) ->
+    console.log(player)
+    if player == millsPlayer.player1 then millsPlayer.player2 else millsPlayer.player1

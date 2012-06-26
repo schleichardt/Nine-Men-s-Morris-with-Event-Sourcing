@@ -57,16 +57,17 @@ test 'turns at start', ->
   app = new MillsGame()
   logger = []
   app.logger (eventArray) -> logger = eventArray
+
   app.start()
   ok logger.length >= 1, "after start at least one event should have occured"
   getLast = () -> JSON.parse(logger[logger.length - 1]).payload
   equal getLast().phase, "start", "should show is start phase"
   equal getLast().turn, 1, "player 1 starts"
 
-  app.trigger {moveTo: 2}
+  app.trigger {moveTo: 2, type: "set"}
 
-  ok logger.length >= 3
-  equal getLast(), "start"
-  equal getLast().turn, 2
+  ok logger.length >= 3, "should have informed gui"
+  equal getLast().phase, "start", "should contain startphase message"
+  equal getLast().turn, 2, "player 2's turn"
 
   $('body').unbind();

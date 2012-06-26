@@ -9,9 +9,11 @@ class ApplicationWithEventSourcing
   exportEvents: ->
     result = []
     for eventEntry in @eventLog
-      result.push { type: eventEntry.type, timeStamp: eventEntry.timeStamp, payload: eventEntry.payload };
+      result.push @toJson(eventEntry)
     result
 
+  toJson: (event) ->
+    { type: event.type, timeStamp: event.timeStamp, payload: event.payload }
 
   ###
   adds a logger.
