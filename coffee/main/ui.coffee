@@ -3,7 +3,6 @@ class MillsUi
     @initStones()
     @game.uiEventHandler @handleEvent
     @__addLandingPoints()
-    @replay() if rebuild
 
   __addLandingPoints: ->
     offsets=[0, 95, 185, 280, 370, 460, 550]
@@ -31,7 +30,6 @@ class MillsUi
     $(".morris-stone").draggable("option", "disabled", true)
 
   replay: ->
-    @getGame().start()
     log = @getGame().eventLog
     console.log("log size = #{log.length}")
     player = 1
@@ -52,6 +50,8 @@ class MillsUi
     console.log("ui:handleEvent: " + JSON.stringify(data))
     if data.phase == "start"
       @enableStartMoves(data.turn, data.fields)
+    if data.phase == "replay"
+      @replay()
 
   getGame: -> @game
 

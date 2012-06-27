@@ -62,6 +62,7 @@ class MillsGame extends ApplicationWithEventSourcing
       @triggerUi {"turn": millsPlayer.player1, "phase": "start", "fields": @freeFields()}
     else
       @replay()
+      @triggerUi {"phase": "replay"}
 
   turn: ->
     if @eventLog.length == 0
@@ -88,7 +89,7 @@ class MillsGame extends ApplicationWithEventSourcing
     realData.type = "ui"
     realData.payload = jsonDataEvent
     console.log("triggerUi called")
-    @lastUiTriggerData = realData
+    @lastUiTriggerData = realData if jsonDataEvent.phase != "replay"
     $("body").trigger realData
     #alert("ui triggered " + jsonDataEvent)
 

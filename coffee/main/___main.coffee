@@ -17,3 +17,4 @@ $(document).ready ->
     millsGame = new MillsGame(rebuildArray)
     millsGame.logger (eventArray) -> $("#logger").attr("value", "[" + eventArray.join(",\n") + "]")
     new MillsUi(millsGame, rebuild)
+    millsGame.start()
