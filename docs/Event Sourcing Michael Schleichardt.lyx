@@ -84,7 +84,11 @@ Michael Schleichardt
 \end_layout
 
 \begin_layout Section
-Anwendungsbeispiel
+Einführung
+\end_layout
+
+\begin_layout Subsection
+Event Sourcing
 \end_layout
 
 \begin_layout Standard
@@ -109,6 +113,10 @@ target "http://martinfowler.com/eaaDev/EventSourcing.html"
 
  Folglich sind Änderungen der Applikation revisionssicher und es kann nicht
  nur der Zustand abgerufen werden, sondern auch der Weg dort hin.
+\end_layout
+
+\begin_layout Subsection
+Anwendungsbeispiel
 \end_layout
 
 \begin_layout Standard
@@ -136,6 +144,10 @@ target "http://de.wikipedia.org/wiki/M%C3%BChle_(Spiel)#Spielablauf"
 .
 \end_layout
 
+\begin_layout Subsection
+Technologien
+\end_layout
+
 \begin_layout Standard
 Zur Umsetzung wurde CoffeeScript gewählt.
  CoffeeScript ist dynamische Scriptsprache, die in JavaScript kompiliert
@@ -160,7 +172,234 @@ target "http://de.wikipedia.org/wiki/CoffeeScript"
 
  Als Javascript Präprozessor ist CoffeeScript gut geeignet mit Events und
  dem JSON-Datenformat zu arbeiten.
- 
+ Für Tests wurde QUnit eingesetzt.
+\end_layout
+
+\begin_layout Subsection
+GUI
+\end_layout
+
+\begin_layout Standard
+Im Spiel werden HTML5 mit Twitter Bootstrap und CSS3 eingesetzt.
+ In Abbildung 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Screenshot-all"
+
+\end_inset
+
+ wird die gesamte GUI dargestellt.
+ Links oben befindet sich das Spielfeld in dem die Steine der Spieler positionie
+rt werden.
+ Rechts daneben befindet sich der Stapel mit den noch zur Verfügung stehenden
+ Steinen der Spieler.
+\end_layout
+
+\begin_layout Standard
+Unter dem Spielfeld befinden sich Buttons und darunter ein Texteingabefeld,
+ welches das aktuelle Log der Applikation als JSON enthält.
+ Die Events als Text zu speichern mach die Nachrichten unabhängig vom Quellcode
+ und ist leichter zu Pflegen bei Änderungen am Code.
+ Die Aufgaben der Buttons werden in den nächsten Abschnitten erläutert.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/screenshot-all.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Screenshot-all"
+
+\end_inset
+
+Screenshot mit allen Elementen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Features
+\end_layout
+
+\begin_layout Subsection
+Complete Rebuild
+\end_layout
+
+\begin_layout Standard
+Das Spiel gibt jeweils das aktuelle Log aus.
+ Wird die Log Ausgabe kopiert, das Spiel durch Neuladen des Fensters zurückgeset
+zt.
+ Die Logdaten können in das leere Textfeld eingefügt werden und durch einen
+ Klick auf den Button 
+\begin_inset Quotes gld
+\end_inset
+
+Rebuild
+\begin_inset Quotes grd
+\end_inset
+
+ wird der Anwendungszustand wiederhergestellt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/rebuild-init.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Zustand erzeugen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/rebuild-empty.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Zustand löschen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/rebuild-init.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Zustand wiederherstellen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Complete Rebuild
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

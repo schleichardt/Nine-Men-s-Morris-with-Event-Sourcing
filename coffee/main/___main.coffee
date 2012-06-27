@@ -47,13 +47,7 @@ $(document).ready ->
     $("body").bind "stoneMovedByUser", -> globalGame = game
     game
 
-  initialData = [{"type":"app","timeStamp":1340782004867,"payload":{"moveTo":"7","type":"set"}},
-      {"type":"app","timeStamp":1340782007084,"payload":{"moveTo":"15","type":"set"}},
-      {"type":"app","timeStamp":1340782009490,"payload":{"moveTo":"23","type":"set"}},
-      {"type":"app","timeStamp":1340782011251,"payload":{"moveTo":"21","type":"set"}},
-      {"type":"app","timeStamp":1340782013425,"payload":{"moveTo":"14","type":"set"}},
-      {"type":"app","timeStamp":1340782015298,"payload":{"moveTo":"20","type":"set"}}]
-  globalGame = startGame(initialData)
+  globalGame = startGame()
 
   $("#rebuild-button").click ->
     $('body, #logger').unbind();
