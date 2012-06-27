@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\usepackage{lscape}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language ngerman
@@ -123,25 +126,12 @@ Anwendungsbeispiel
 Als Anwendungsbeispiel wurde das Aufstellen eines Mühlespiels gewählt.
  Der Zustand der Applikation besteht aus der Verteilung der Steine auf dem
  Spielfeld und der Information welcher Spieler am Zuge ist.
- Die Events sind die Positionierung der eigenen Spielsteine und das Wegnehmen
- gegnerischer Steine.
+ Die Events sind die Positionierung der eigenen Spielsteine.
  Brettspiele wie Mühle sind besonders gut für Event Sourcing geeignet, da
- man während oder nach des Spiel alle vorherigen Schritte analysieren kann
- und ggf.
+ man alle vorherigen Schritte analysieren kann und ggf.
  alternative Vorgehensweisen testen kann.
- 
-\end_layout
-
-\begin_layout Standard
-Der Spielablauf kann der deutschen Wikpedia entnommen werden: 
-\begin_inset CommandInset href
-LatexCommand href
-name "de.wikipedia.org/wiki/Mühle_(Spiel)#Spielablauf"
-target "http://de.wikipedia.org/wiki/M%C3%BChle_(Spiel)#Spielablauf"
-
-\end_inset
-
-.
+ Schon allein mit der Startphase eines Mühlespiels können die Techniken
+ des Event Sourcing angewandt werden.
 \end_layout
 
 \begin_layout Subsection
@@ -173,6 +163,7 @@ target "http://de.wikipedia.org/wiki/CoffeeScript"
  Als Javascript Präprozessor ist CoffeeScript gut geeignet mit Events und
  dem JSON-Datenformat zu arbeiten.
  Für Tests wurde QUnit eingesetzt.
+ Des weiteren wurde jQuery eingesetzt.
 \end_layout
 
 \begin_layout Subsection
@@ -193,6 +184,7 @@ reference "fig:Screenshot-all"
 rt werden.
  Rechts daneben befindet sich der Stapel mit den noch zur Verfügung stehenden
  Steinen der Spieler.
+ Die Steine werden durch Drag and Drop bewegt.
 \end_layout
 
 \begin_layout Standard
@@ -255,11 +247,12 @@ Complete Rebuild
 \end_layout
 
 \begin_layout Standard
-Das Spiel gibt jeweils das aktuelle Log aus.
+Das Spiel gibt jeweils das aktuelle und vollständige Log aus.
  Wird die Log Ausgabe kopiert, das Spiel durch Neuladen des Fensters zurückgeset
 zt.
- Die Logdaten können in das leere Textfeld eingefügt werden und durch einen
- Klick auf den Button 
+ Ist erstmal der Zustand verloren.
+ Die Logdaten können jedoch wieder in das leere Textfeld eingefügt werden
+ und durch einen Klick auf den Button 
 \begin_inset Quotes gld
 \end_inset
 
@@ -425,7 +418,7 @@ payload.moveTo
 \end_inset
 
 , wo ein Stein hingesetzt wurde.
- Es wird implizit angenommen, dass jede ungeraden 
+ Es wird implizit angenommen, dass jede ungerade 
 \begin_inset Quotes gld
 \end_inset
 
@@ -433,7 +426,7 @@ set
 \begin_inset Quotes grd
 \end_inset
 
--Operationen zu Spieler 1 gehören und die geraden zu Spieler 2.
+-Operation zu Spieler 1 gehört und die geraden zu Spieler 2.
  Nachfolgend wird ein Auszug dargestellt:
 \end_layout
 
@@ -477,8 +470,344 @@ status open
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{landscape}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/temporal-query-start.png
+	height 19pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ausgangslage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/temporal-query-1-prev.png
+	height 19pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+1x zurück
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/temporal-query-2-prev.png
+	height 19pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+2x zurück
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/temporal-query-1-prev.png
+	height 19pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+1x vorwärts
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/temporal-query-start.png
+	height 19pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+2x vorwärts
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Temporal-Querys"
+
+\end_inset
+
+Temporal Querys
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{landscape}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/alternate-timeline-notstarted.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aktueller Spielstand
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/alternate-timeline-back.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+1x zurück
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/alternate-timeline-started.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Stein anders gesetzt
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Alternative-Zeitlinie"
+
+\end_inset
+
+Alternative Zeitlinie
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-Temporal Query
+Temporal Querys
 \end_layout
 
 \begin_layout Standard
@@ -495,6 +824,291 @@ Wurde mindestens ein Zug gespielt, wird der zurück-Button aktiv (nicht der
 \begin_layout Standard
 Wurde mindestens einmal ein Zug zurückgesprungen, wird der vorwärts-Button
  aktiv, der pro Klick vorwärts in der Historie browst.
+ Das zweimalige zurückbrowsen und dann zurück zum aktuellen Stand wird in
+ Abbildung 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Temporal-Querys"
+
+\end_inset
+
+ gezeigt (Steine verschwinden und tauchen wieder auf).
+\end_layout
+
+\begin_layout Standard
+Wurde mindestens ein Schritt zurückgebrowst, besteht die Möglichkeit eine
+ alternative Zeitlinie für das Spiel zu starten in dem man einen Spielstein
+ setzt.
+ Dadurch wird der Vorwärts-Button gesperrt und die vorigen 
+\begin_inset Quotes gld
+\end_inset
+
+nachfolgenden
+\begin_inset Quotes grd
+\end_inset
+
+ Spielzüge gehen verloren.
+ Dies ist nützlich, wenn man einen Stein fehlplatziert hat und es gleich
+ wieder korrigieren möchte oder man gesehen hat, dass man ab einem Punkt
+ schlecht gespielt hat und dort hin zurückkehrt und den Fehler nicht wiederholt.
+ Abbildung 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Alternative-Zeitlinie"
+
+\end_inset
+
+ zeigt wie Spieler 2 einen Zug gemacht hat, zurück geklickt hat und dann
+ einen Spielstein neben den anderen positioniert hat statt darunter.
+\end_layout
+
+\begin_layout Subsection
+Event Replay
+\end_layout
+
+\begin_layout Standard
+Event Replay ermöglicht es Events zu ändern bzw.
+ ihre Reihenfolge zu ändern durch Manipulierung der Log-Events.
+\end_layout
+
+\begin_layout Standard
+Z.B.
+ werden im Log die ungeraden Events mit ihren Nachfolgern ausgetauscht und
+ auf 
+\begin_inset Quotes gld
+\end_inset
+
+Rebuild
+\begin_inset Quotes grd
+\end_inset
+
+ geklickt.
+\end_layout
+
+\begin_layout Standard
+Vorher:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[{"type":"app","timeStamp":1340799876883,"payload":{"moveTo":"7","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876887,"payload":{"moveTo":"15","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876890,"payload":{"moveTo":"23","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876891,"payload":{"moveTo":"21","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876892,"payload":{"moveTo":"14","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876893,"payload":{"moveTo":"20","type":"set"}}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nachher:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[{"type":"app","timeStamp":1340799876883,"payload":{"moveTo":"15","type":"set"}}
+,
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876887,"payload":{"moveTo":"7","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876890,"payload":{"moveTo":"21","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876891,"payload":{"moveTo":"23","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876892,"payload":{"moveTo":"20","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876893,"payload":{"moveTo":"14","type":"set"}}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Wie in Abbildung 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Event-Replay"
+
+\end_inset
+
+ gezeigt, werden somit die roten durch die schwarzen Steine ausgetauscht
+ und umgekehrt.
+ Implementiert ist es als Complete Rebuild und nicht als Reversion, da die
+ Anzahl der Spielzüge so klein ist, dass es kaum zu Performanceproblemen
+ kommen kann und weniger Code zu warten ist, da Complete Rebuild schon implement
+iert ist.
+ Prinzipiell ist Reversion auf Mühle mit dem Log anwendbar.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/event-replay-1.png
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vorher
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/michael/Dropbox/imi/Programming/Uebung3/img/event-replay-2.png
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Nachher
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Event-Replay"
+
+\end_inset
+
+Event Replay
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fazit
+\end_layout
+
+\begin_layout Standard
+Applikationen, die Event Sourcing einsetzen, bieten sehr mächtige Analyse-
+ und Korrekturmöglichkeiten, die nur sehr schwer mit klassischen zustandsbehafte
+ten Systemen erreichbar sind.
+ 
+\end_layout
+
+\begin_layout Standard
+Das Verwenden von JSON als Eventdarstellungsform hat sich bewährt.
+ Es hat Code-Änderungen möglich gemacht und sorgt auch für eine Entkopplung
+ der Objekte und Funktionen.
+ Ohne die funktionalen Programmiermöglichkeiten von CoffeeScript, JavaScript
+ und jQuery wäre es erheblich schwieriger gewesen die Anwendung zu entwickeln.
+ Jedoch fehlte das aus Scala bekannte Pattern Matching zum Parsen der Nachrichte
+n.
+ 
+\end_layout
+
+\begin_layout Standard
+Für zustandsbehaftete System sind prozedurale und objektorientierte Programmieru
+ng okay, für Event Sourcing ist funktionale Programmierung ein besonders
+ geeignetes Paradigma.
 \end_layout
 
 \end_body
