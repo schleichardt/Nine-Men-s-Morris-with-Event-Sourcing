@@ -8,18 +8,22 @@ $(document).ready ->
       $("#logger").attr("value", "[" + eventArray.join(",\n") + "]")
       $("#prev-button").removeClass("disabled")
 
-  startGame = (rebuildArray = []) ->
-    $('body').unbind()
-    game = new MillsGame(rebuildArray)
-    initLogger(game)
-    new MillsUi(game)
+  initPrevButton = (game) ->
     $("#prev-button").click ->
       if !$(this).hasClass("disabled")
         log = game.eventLog
         prevLog = if log.length > 1 then log.slice(0, -1) else []
         console.log("prevlogsize="+prevLog.length)
         $("#prev-button").unbind("click")
+        $("#next-button").removeClass("disabled")
         startGame(prevLog)
+
+  startGame = (rebuildArray = []) ->
+    $('body').unbind()
+    game = new MillsGame(rebuildArray)
+    initLogger(game)
+    new MillsUi(game)
+    initPrevButton(game)
     game.start()
     game
 
