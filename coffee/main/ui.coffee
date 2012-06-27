@@ -5,7 +5,7 @@ class MillsUi
     @__addLandingPoints()
 
   __addLandingPoints: ->
-    offsets=[0, 95, 185, 280, 370, 460, 550]
+    offsets=[0, 90, 175, 275, 368, 460, 550]
     i=0
     #todo: ggf. wird brett immer falsch herum gezeichnet
     for p in @game.board.points()

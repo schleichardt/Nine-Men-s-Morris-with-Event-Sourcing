@@ -23,15 +23,15 @@
 .morris-stone {
     position: absolute;
     z-index: 10;
-    outline: 1px solid #000000;
+    background-size: contain;
 }
 
 .morris-stone.player1 {
-    background: black;
+    background: url("../img/black-stone.png");
 }
 
 .morris-stone.player2 {
-    background: red;
+    background: url("../img/red-stone.png");
 }
 
 .landing-point {
