@@ -93,20 +93,3 @@ class MillsUi
                     <div id="stone-9-player2" class="ui-widget-content morris-stone player2 never-moved"></div>
                 </div>'''
     $("#stoneSource").html(html)
-
-
-initMillsGui = (millsGame, rebuild = false) ->
-  new MillsUi(millsGame, rebuild)
-
-nevercalled = ->
-  $(".morris-stone").draggable(
-    revert: "invalid"
-    snap: ".landing-point"
-    drag: (event, ui) ->
-      x = event.pageX - $("#mainCanvas").offset().left;
-      y = event.pageY - $("#mainCanvas").offset().top;
-      $("#debug").html(x + " " + y)
-  )
-
-
-

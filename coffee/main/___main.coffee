@@ -4,18 +4,16 @@ $(document).ready ->
   millsGame.logger (eventArray) -> $("#logger").html("[" + eventArray.join(",\n") + "]")
 
   rebuild = false
-  initMillsGui(millsGame)
+  new MillsUi(millsGame, rebuild)
 
   millsGame.start()
 
   $("#rebuild-button").click ->
     $('body, #logger').unbind();
+    rebuild = true
     inputForRebuildAsJson = $("#logger").attr("value")
     rebuildArray = JSON.parse(inputForRebuildAsJson)
-    console.log("#{rebuildArray.length} elements for rebuild")
+
     millsGame = new MillsGame(rebuildArray)
-
     millsGame.logger (eventArray) -> $("#logger").attr("value", "[" + eventArray.join(",\n") + "]")
-
-    rebuild = true
-    initMillsGui(millsGame, rebuild)
+    new MillsUi(millsGame, rebuild)
