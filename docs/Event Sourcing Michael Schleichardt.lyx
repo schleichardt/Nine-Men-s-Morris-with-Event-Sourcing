@@ -267,14 +267,21 @@ Rebuild
 \begin_inset Quotes grd
 \end_inset
 
- wird der Anwendungszustand wiederhergestellt.
+ wird der Anwendungszustand wiederhergestellt, wie in Abbildung 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Complete-Rebuild"
+
+\end_inset
+
+ veranschaulicht.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -385,6 +392,12 @@ Zustand wiederherstellen
 \begin_inset Caption
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Complete-Rebuild"
+
+\end_inset
+
 Complete Rebuild
 \end_layout
 
@@ -400,6 +413,88 @@ Complete Rebuild
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Das verwendete Log ist in JSON und speichert in 
+\begin_inset Quotes gld
+\end_inset
+
+payload.moveTo
+\begin_inset Quotes grd
+\end_inset
+
+, wo ein Stein hingesetzt wurde.
+ Es wird implizit angenommen, dass jede ungeraden 
+\begin_inset Quotes gld
+\end_inset
+
+set
+\begin_inset Quotes grd
+\end_inset
+
+-Operationen zu Spieler 1 gehören und die geraden zu Spieler 2.
+ Nachfolgend wird ein Auszug dargestellt:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[{"type":"app","timeStamp":1340799876883,"payload":{"moveTo":"7","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876887,"payload":{"moveTo":"15","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876890,"payload":{"moveTo":"23","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876891,"payload":{"moveTo":"21","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876892,"payload":{"moveTo":"14","type":"set"}},
+\end_layout
+
+\begin_layout Plain Layout
+
+{"type":"app","timeStamp":1340799876893,"payload":{"moveTo":"20","type":"set"}}]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Temporal Query
+\end_layout
+
+\begin_layout Standard
+Das Spiel kann nicht nur den aktuellen Zustand darstellen, sondern auch
+ vorherige.
+\end_layout
+
+\begin_layout Standard
+Wurde mindestens ein Zug gespielt, wird der zurück-Button aktiv (nicht der
+ im Browser, sondern unter dem Spielbrett) und ermöglicht einem pro Klick
+ einen Zug zurückzuschauen.
+\end_layout
+
+\begin_layout Standard
+Wurde mindestens einmal ein Zug zurückgesprungen, wird der vorwärts-Button
+ aktiv, der pro Klick vorwärts in der Historie browst.
 \end_layout
 
 \end_body

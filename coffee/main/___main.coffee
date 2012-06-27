@@ -25,32 +25,37 @@ $(document).ready ->
 
   initNextButton = (game) ->
     console.log("initNextButton")
+    console.log("gameSize start #{game.eventLog.length}")
     $("body").bind "stoneMovedByUser", -> $("#next-button").addClass("disabled")
     $("#next-button").click (event) ->
+      console.log("gameSize click #{game.eventLog.length}")
+      getGame = -> game
       event.preventDefault()
-      handler = (event) ->
-        positionOfCommands = game.eventLog.length + 1
+      if !$("#next-button").hasClass("disabled")
+        console.log("gameSize handler #{game.eventLog.length}")
+        positionOfCommands = getGame().eventLog.length + 1
         prevLog = getGlobalGame().eventLog.slice(0, positionOfCommands)
-        console.log("local: #{getGlobalGame().eventLog.length} global #{game.eventLog.length}")
+        console.log("global: #{getGlobalGame().eventLog.length} local #{getGame().eventLog.length} positionOfCommands=#{positionOfCommands} prevlogsize=#{prevLog.length}")
         startGame(prevLog)
-      handler(event) if !$("#next-button").hasClass("disabled")
 
   startGame = (rebuildArray = []) ->
     $('body, #next-button, #prev-button').unbind()
     game = new MillsGame(rebuildArray)
+    globalGame = game if globalGame == undefined
     initLogger(game)
     new MillsUi(game)
     game.start()
     $("#next-button").addClass("disabled") if getGlobalGame() && getGlobalGame().eventLog.length == game.eventLog.length
     initPrevButton(game)
+    console.log("global: #{getGlobalGame().eventLog.length} ") if getGlobalGame()
     initNextButton(game)
-    $("body").bind "stoneMovedByUser", -> globalGame = game
+    $("body").bind "stoneMovedByUser", -> globalGame = game; console.log("stone moved by user")
     game
 
-  globalGame = startGame()
+  startGame()
 
   $("#rebuild-button").click ->
     $('body, #logger').unbind();
     inputForRebuildAsJson = $("#logger").attr("value")
     rebuildArray = JSON.parse(inputForRebuildAsJson)
-    startGame(rebuildArray)
+    globalGame = startGame(rebuildArray)
