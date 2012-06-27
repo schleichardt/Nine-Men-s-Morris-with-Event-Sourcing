@@ -17,18 +17,26 @@ $(document).ready ->
     $("#prev-button").click (event) ->
       event.preventDefault()
       if !$("#prev-button").hasClass("disabled")
-        $("#prev-button").unbind("click")
         log = game.eventLog
         prevLog = if log.length > 1 then log.slice(0, -1) else []
         startGame(prevLog)
+        $("#next-button").removeClass("disabled")
 
 
-  initNextButton = (Game) ->
-    $("#prev-button").click (event) ->
+  initNextButton = (game) ->
+    console.log("initNextButton")
+    $("#next-button").click (event) ->
       event.preventDefault()
+      handler = (event) ->
+        positionOfCommands = game.eventLog.length + 1
+        prevLog = getGlobalGame().eventLog.slice(0, positionOfCommands)
+        console.log("local: #{getGlobalGame().eventLog.length} global #{game.eventLog.length}")
+#        $("#next-button").addClass("disabled") if getGlobalGame().eventLog.length == game.eventLog.length
+        startGame(prevLog)
+      handler(event) if !$("#next-button").hasClass("disabled")
 
   startGame = (rebuildArray = []) ->
-    $('body').unbind()
+    $('body, #next-button, #prev-button').unbind()
     game = new MillsGame(rebuildArray)
     initLogger(game)
     new MillsUi(game)
