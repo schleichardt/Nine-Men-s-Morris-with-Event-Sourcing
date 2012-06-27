@@ -1,5 +1,5 @@
 class MillsUi
-  constructor: (@game, rebuild = false) ->
+  constructor: (@game) ->
     @initStones()
     @game.uiEventHandler @handleEvent
     @__addLandingPoints()
