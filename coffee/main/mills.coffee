@@ -67,10 +67,7 @@ class MillsGame extends ApplicationWithEventSourcing
     if @eventLog.length == 0
       millsPlayer.player1
     else
-      result = @eventLog.filter (event) -> event.payload.type == "set"
-      turn = result.length % 2 + 1
-      #console.log("movenumber" + @moveId())
-      turn
+      @moveId() % 2 + 1
 
   moveId: ->
     result = @eventLog.filter (event) -> event.payload.type == "set"
