@@ -31,7 +31,6 @@ $(document).ready ->
         positionOfCommands = game.eventLog.length + 1
         prevLog = getGlobalGame().eventLog.slice(0, positionOfCommands)
         console.log("local: #{getGlobalGame().eventLog.length} global #{game.eventLog.length}")
-#        $("#next-button").addClass("disabled") if getGlobalGame().eventLog.length == game.eventLog.length
         startGame(prevLog)
       handler(event) if !$("#next-button").hasClass("disabled")
 
@@ -41,6 +40,7 @@ $(document).ready ->
     initLogger(game)
     new MillsUi(game)
     game.start()
+    $("#next-button").addClass("disabled") if getGlobalGame() && getGlobalGame().eventLog.length == game.eventLog.length
     initPrevButton(game)
     initNextButton(game)
     game
