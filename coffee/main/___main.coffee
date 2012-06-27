@@ -25,6 +25,7 @@ $(document).ready ->
 
   initNextButton = (game) ->
     console.log("initNextButton")
+    $("body").bind "stoneMovedByUser", -> $("#next-button").addClass("disabled")
     $("#next-button").click (event) ->
       event.preventDefault()
       handler = (event) ->
@@ -43,6 +44,7 @@ $(document).ready ->
     $("#next-button").addClass("disabled") if getGlobalGame() && getGlobalGame().eventLog.length == game.eventLog.length
     initPrevButton(game)
     initNextButton(game)
+    $("body").bind "stoneMovedByUser", -> globalGame = game
     game
 
   initialData = [{"type":"app","timeStamp":1340782004867,"payload":{"moveTo":"7","type":"set"}},

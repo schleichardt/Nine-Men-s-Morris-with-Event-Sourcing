@@ -25,6 +25,7 @@ class MillsUi
         $(selectorDraggable).removeClass("never-moved")
         id = $(this).attr('id').replace("landing-point-", "")
         thisAlias.getGame().trigger {moveTo: id, type: "set"}
+        $("body").trigger "stoneMovedByUser"
 
   __lockAllStones: ->
     $(".morris-stone").draggable("option", "disabled", true)
