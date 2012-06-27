@@ -31,14 +31,12 @@ class MillsUi
 
   replay: ->
     log = @getGame().eventLog
-    console.log("gui-rebuildsize=" + log.length)
     player = 1
     stone = 1
     for move in log
       data = move.payload
       if data.type == "set"
         selector = "#stone-#{stone}-player#{player}"
-        console.log(JSON.stringify(move.payload) + " " + selector)
         element = $(selector)
         element.prependTo("#landing-point-#{data.moveTo}");
         element.removeClass("never-moved")
@@ -68,7 +66,6 @@ class MillsUi
 
   initStones: ->
     $(".morris-stone").remove()
-    console.log("init Stones")
     html = '''<div id="depotPlayer1" class="depot">
                     <h3>Player 1</h3>
                     <div id="stone-1-player1"  class="ui-widget-content morris-stone player1 never-moved"></div>

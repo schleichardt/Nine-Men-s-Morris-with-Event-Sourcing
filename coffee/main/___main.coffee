@@ -1,6 +1,11 @@
 $(document).ready ->
   $("#prev-button, #next-button").addClass("disabled")
 
+  #stores game if time query temporary hides the real game
+  globalGame = undefined
+  getGlobalGame = -> globalGame
+
+
   initLogger = (game) ->
     $("#logger").attr("value", "")
     $("#logger").unbind()
@@ -9,14 +14,27 @@ $(document).ready ->
       $("#prev-button").removeClass("disabled")
 
   initPrevButton = (game) ->
-    $("#prev-button").click ->
+    $("#prev-button").click (event) ->
+      event.preventDefault()
       if !$(this).hasClass("disabled")
         log = game.eventLog
         prevLog = if log.length > 1 then log.slice(0, -1) else []
-        console.log("prevlogsize="+prevLog.length)
         $("#prev-button").unbind("click")
+        $("#prev-button").addClass("disabled")
         $("#next-button").removeClass("disabled")
         startGame(prevLog)
+
+  initNextButton = (myGame) ->
+    $("#next-button").click (event) ->
+      event.preventDefault()
+      handleEvent = (game, event) ->
+        if !$(this).hasClass("disabled")
+          positionOfCommands = game.eventLog.length + 1
+          prevLog = getGlobalGame().eventLog.slice(0, positionOfCommands)
+          $("#next-button").unbind()
+          $("#next-button").addClass("disabled")
+          startGame(prevLog)
+      handleEvent(myGame, event)
 
   startGame = (rebuildArray = []) ->
     $('body').unbind()
@@ -24,6 +42,7 @@ $(document).ready ->
     initLogger(game)
     new MillsUi(game)
     initPrevButton(game)
+    initNextButton(game)
     game.start()
     game
 
