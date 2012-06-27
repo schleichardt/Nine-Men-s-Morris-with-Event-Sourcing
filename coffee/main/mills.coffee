@@ -88,13 +88,11 @@ class MillsGame extends ApplicationWithEventSourcing
     realData = new Object()
     realData.type = "ui"
     realData.payload = jsonDataEvent
-    console.log("triggerUi called")
     @lastUiTriggerData = realData if jsonDataEvent.phase != "replay"
     $("body").trigger realData
     #alert("ui triggered " + jsonDataEvent)
 
   repeatLastUiTrigger: ->
-    console.log("last triggerdata="+JSON.stringify(@lastUiTriggerData.payload))
     $("body").trigger @lastUiTriggerData
 
   @fieldsNumber: -> 24

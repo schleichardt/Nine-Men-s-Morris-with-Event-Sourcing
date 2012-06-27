@@ -27,5 +27,4 @@ class ApplicationWithEventSourcing
 
   replay: ->
     for eventEntry in @eventsSuggested
-      console.log("ApplicationWithEventSourcing.replay one entry")
       $("body").trigger eventEntry;

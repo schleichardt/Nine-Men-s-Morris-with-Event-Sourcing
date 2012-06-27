@@ -31,13 +31,15 @@ class MillsUi
 
   replay: ->
     log = @getGame().eventLog
-    console.log("log size = #{log.length}")
+    console.log("gui-rebuildsize=" + log.length)
     player = 1
     stone = 1
     for move in log
       data = move.payload
       if data.type == "set"
-        element = $("#stone-#{stone}-player#{player}")
+        selector = "#stone-#{stone}-player#{player}"
+        console.log(JSON.stringify(move.payload) + " " + selector)
+        element = $(selector)
         element.prependTo("#landing-point-#{data.moveTo}");
         element.removeClass("never-moved")
         element.draggable( "option", "disabled", true )
@@ -47,7 +49,6 @@ class MillsUi
 
   handleEvent: (event) =>
     data = event.payload
-    console.log("ui:handleEvent: " + JSON.stringify(data))
     if data.phase == "start"
       @enableStartMoves(data.turn, data.fields)
     if data.phase == "replay"
@@ -63,11 +64,11 @@ class MillsUi
       revert: "invalid"
       snap: allowedLandingPoints.join(",")
       #scope: allowedLandingPoints.join(",")
-
     element.draggable( "option", "disabled", false )#must be called explicit after
 
   initStones: ->
     $(".morris-stone").remove()
+    console.log("init Stones")
     html = '''<div id="depotPlayer1" class="depot">
                     <h3>Player 1</h3>
                     <div id="stone-1-player1"  class="ui-widget-content morris-stone player1 never-moved"></div>
