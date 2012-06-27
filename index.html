@@ -39,9 +39,22 @@
             <img src="img/Moelle.svg" id="muehle-bild"/>
         </div>
         <div id="stoneSource"></div>
-        <div>
-            <h3>Log</h3>
-            <button class="btn" id="rebuild-button">Rebuild</button>
+
+        <div style="clear: both" id="control">
+            <div class="btn-toolbar" style="margin-bottom: 9px">
+                <div class="btn-group">
+                    <button class="btn" id="rebuild-button">Rebuild</button>
+                </div>
+                <div class="btn-group">
+                    <a class="btn disabled" href="#"><i class="icon-minus"></i> zurück</a>
+                    <a class="btn disabled" href="#"><i class="icon-plus"></i> vorwärts</a>
+                </div>
+                <div class="progress progress-striped" style="width: 530px">
+                    <div class="bar" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <h3>Log/rebuild input</h3>
             <textarea id="logger" class="input-xxlarge" rows="20"></textarea>
         </div>
     </div> <!-- /container -->
